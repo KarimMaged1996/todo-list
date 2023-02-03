@@ -47,7 +47,8 @@ body {
 #inbox,
 #today,
 #week,
-#newProj {
+#newProj,
+.addNewTodo {
   display: flex;
   align-items: center;
   padding-left: 1vh;
@@ -72,6 +73,17 @@ div #newProj:hover {
   grid-column: 2;
   min-height: 85vh;
   background-color: #e4e4e7;
+  padding-left: 2vw;
+}
+.todos img {
+  height: 3vh;
+  width: auto;
+}
+div.addNewTodo:hover {
+  width: fit-content;
+  cursor: pointer;
+  transform: scale(1.2);
+  transform-origin: left;
 }
 
 .footer {

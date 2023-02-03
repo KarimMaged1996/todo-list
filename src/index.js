@@ -3,6 +3,7 @@ import Todo from './Todo';
 import { replaceAddProj } from './sideBarUI';
 import projectIcon from './imgs/newProjIcon.svg';
 import fetchArr from './fetchLibraryArray';
+import createProjectUI from './projectsUI';
 
 // the array that will store all projects
 const projectsLibrary = [];
@@ -60,7 +61,27 @@ const sideUI = (function () {
 
 //event listener for dynamically added projects
 document.addEventListener('click', (e) => {
-  if (e.target.getAttribute('class') === 'new-project') {
-    console.log('it worked');
+  // event delegation check if target or target parent has the class new-project
+  if (
+    e.target.getAttribute('class') === 'new-project' ||
+    e.target.parentNode.getAttribute('class') === 'new-project'
+  ) {
+    let projectName;
+    // if target was the parent container its children length > 0
+    if (e.target.children.length > 0) {
+      projectName = e.target.children[1].textContent;
+    } else {
+      // the case if the child was clicked
+      projectName = e.target.parentNode.children[1].textContent;
+    }
+
+    let project = fetchArr(projectsLibrary, projectName);
+    let parent = document.querySelector('.todos');
+    let Oldchildren = Array.from(parent.children);
+    let newChildren = createProjectUI(project);
+    Oldchildren.forEach((elem) => {
+      elem.remove();
+    });
+    parent.append(...newChildren);
   }
 });
