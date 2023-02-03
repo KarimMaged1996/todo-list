@@ -2,6 +2,7 @@ import Project from './project';
 import Todo from './Todo';
 import { replaceAddProj } from './sideBarUI';
 import projectIcon from './imgs/newProjIcon.svg';
+import fetchArr from './fetchLibraryArray';
 
 // the array that will store all projects
 const projectsLibrary = [];
@@ -24,7 +25,10 @@ const sideUI = (function () {
        not empty
     */
     inputDiv[1].addEventListener('click', () => {
-      if (inputDiv[0].value !== '') {
+      if (
+        inputDiv[0].value !== '' &&
+        fetchArr(projectsLibrary, inputDiv[0].value) === undefined
+      ) {
         let newProj = document.createElement('div');
         newProj.classList.add('new-project');
         let icon = new Image();
@@ -35,6 +39,10 @@ const sideUI = (function () {
         projects.append(newProj, newForm[0]);
         newForm[1].remove();
         projectsLibrary.push(new Project(inputDiv[0].value));
+      } else if (fetchArr(projectsLibrary, inputDiv[0].value) !== undefined) {
+        inputDiv[0].style.border = 'solid 0.25vh red';
+        inputDiv[0].value = '';
+        inputDiv[0].setAttribute('placeholder', 'Duplicate project name');
       } else {
         inputDiv[0].style.border = 'solid 0.25vh red';
         inputDiv[0].setAttribute('placeholder', 'project must have a name');

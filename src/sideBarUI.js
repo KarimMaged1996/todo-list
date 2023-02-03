@@ -1,7 +1,8 @@
 /*  this module will include 3 functions
 1- createNewProj will create the div that take input for new project
+ and return it
 2- replaceAddProj will replace the addProj with the new form
- and returns the addProj
+ and returns the addProj and the div
 */
 export function createNewProjForm() {
   let div = document.createElement('div');
