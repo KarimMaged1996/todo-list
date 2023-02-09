@@ -143,3 +143,40 @@ div.tempForm :nth-child(2) {
 div.tempForm :nth-child(3) {
   background-color: rgb(242, 42, 42);
 }
+
+.todo-input {
+  height: 50vh;
+  width: 30vw;
+  border: solid black 1px;
+  border-radius: 3px;
+  background-color: aliceblue;
+  position: fixed;
+  top: 25vh;
+  right: 35vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-left: 5vw;
+  font-size: 1.5vw;
+}
+
+.todo-input input,
+.todo-input select {
+  width: 15vw;
+}
+
+.addTodoBtn,
+.cancelTodoBtn {
+  width: 7.5vw;
+  font-size: 3vh;
+  margin: 5%;
+  border-radius: 0.5vh;
+}
+
+.addTodoBtn {
+  background-color: rgb(31, 205, 31);
+}
+
+.cancelTodoBtn {
+  background-color: rgb(242, 42, 42);
+}
