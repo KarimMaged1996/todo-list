@@ -4,6 +4,7 @@ import { replaceAddProj } from './sideBarUI';
 import projectIcon from './imgs/newProjIcon.svg';
 import fetchArr from './fetchLibraryArray';
 import createProjectUI from './projectsUI';
+import createTodoForm from './todoInput';
 
 // the array that will store all projects
 const projectsLibrary = [];
@@ -83,5 +84,17 @@ document.addEventListener('click', (e) => {
       elem.remove();
     });
     parent.append(...newChildren);
+  }
+});
+
+// event listener for addtodo button
+document.addEventListener('click', (e) => {
+  if (
+    e.target.getAttribute('class') === 'addNewTodo' ||
+    e.target.parentNode.getAttribute('class') === 'addNewTodo'
+  ) {
+    let target = document.querySelector('.addNewTodo');
+    document.body.append(createTodoForm());
+    target.style.visibility = 'hidden';
   }
 });
