@@ -90,6 +90,10 @@ document.addEventListener('click', (e) => {
 // module responsible for the add todo
 const todos = (function () {
   let todoForm = createTodoForm();
+  let title = todoForm.children[0].children[1];
+  let dueDate = todoForm.children[1].children[1];
+  let priority = todoForm.children[2].children[1];
+  let discription = todoForm.children[3].children[1];
 
   //event listiner to pop up a form when the add todo button is clicked
   document.addEventListener('click', (e) => {
@@ -108,6 +112,38 @@ const todos = (function () {
       todoForm.remove();
       let todoBtn = document.querySelector('.addNewTodo');
       todoBtn.style.visibility = 'visible';
+    }
+  });
+
+  //event listener for the add button
+  document.addEventListener('click', (e) => {
+    if (e.target.getAttribute('class') === 'addTodoBtn') {
+      if (title.value === '') {
+        title.style.border = 'solid 0.25vh red';
+        title.setAttribute('placeholder', 'this input is required');
+      }
+      if (dueDate.value === '') {
+        dueDate.style.border = 'solid 0.25vh red';
+      } else {
+        let projectParent = document.querySelector('.todos');
+        let projectName = projectParent.children[0].textContent;
+        let currentProj = fetchArr(projectsLibrary, projectName);
+        currentProj.addTodo(
+          new Todo(
+            title.value,
+            dueDate.value,
+            priority.value,
+            discription.value
+          )
+        );
+        let Oldchildren = Array.from(projectParent.children);
+        Oldchildren.forEach((child) => {
+          child.remove();
+        });
+        let newChildren = createProjectUI(currentProj);
+        projectParent.append(...newChildren);
+        todoForm.remove();
+      }
     }
   });
 })();
