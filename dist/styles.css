@@ -180,3 +180,13 @@ div.tempForm :nth-child(3) {
 .cancelTodoBtn {
   background-color: rgb(242, 42, 42);
 }
+
+.single-todo {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 2vh;
+  background-color: aliceblue;
+  width: 40vw;
+  height: 10vh;
+}
