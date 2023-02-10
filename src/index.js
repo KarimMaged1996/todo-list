@@ -87,14 +87,27 @@ document.addEventListener('click', (e) => {
   }
 });
 
-// event listener for addtodo button
-document.addEventListener('click', (e) => {
-  if (
-    e.target.getAttribute('class') === 'addNewTodo' ||
-    e.target.parentNode.getAttribute('class') === 'addNewTodo'
-  ) {
-    let target = document.querySelector('.addNewTodo');
-    document.body.append(createTodoForm());
-    target.style.visibility = 'hidden';
-  }
-});
+// module responsible for the add todo
+const todos = (function () {
+  let todoForm = createTodoForm();
+
+  //event listiner to pop up a form when the add todo button is clicked
+  document.addEventListener('click', (e) => {
+    if (
+      e.target.getAttribute('class') === 'addNewTodo' ||
+      e.target.parentNode.getAttribute('class') === 'addNewTodo'
+    ) {
+      document.body.append(todoForm);
+      let todoBtn = document.querySelector('.addNewTodo');
+      todoBtn.style.visibility = 'hidden';
+    }
+  });
+  //event listener for the cancel button
+  document.addEventListener('click', (e) => {
+    if (e.target.getAttribute('class') === 'cancelTodoBtn') {
+      todoForm.remove();
+      let todoBtn = document.querySelector('.addNewTodo');
+      todoBtn.style.visibility = 'visible';
+    }
+  });
+})();
