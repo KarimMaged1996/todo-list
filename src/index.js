@@ -5,11 +5,50 @@ import projectIcon from './imgs/newProjIcon.svg';
 import fetchArr from './fetchLibraryArray';
 import createProjectUI from './projectsUI';
 import createTodoForm from './todoInput';
+import populateLocalStorage from './storage';
 
 // the array that will store all projects
 const projectsLibrary = [];
-
 let projects = document.querySelector('#projects');
+
+// this module is responsible to populate the projectsLibrary array
+// session is not empty
+const storageModule = (function () {
+  if (sessionStorage.length > 1) {
+    let storageArr = JSON.parse(sessionStorage.getItem('testStorage'));
+    for (let elem of storageArr) {
+      projectsLibrary.push(new Project(elem.name));
+    }
+
+    for (let i = 0; i < projectsLibrary.length; i++) {
+      for (let j = 0; j < storageArr[i].todo.length; j++) {
+        projectsLibrary[i].addTodo(
+          new Todo(
+            storageArr[i].todo[j].title,
+            storageArr[i].todo[j].dueDate,
+            storageArr[i].todo[j].priority,
+            storageArr[i].todo[j].discription,
+            storageArr[i].todo[j].isComplete
+          )
+        );
+      }
+    }
+    // this will append proj names to the UI
+    let div = document.querySelector('#newProj');
+    div.remove();
+    projectsLibrary.forEach((proj) => {
+      let newProj = document.createElement('div');
+      newProj.classList.add('new-project');
+      let icon = new Image();
+      icon.src = projectIcon;
+      let divText = document.createElement('div');
+      divText.textContent = proj.name;
+      newProj.append(icon, divText);
+      projects.append(newProj);
+    });
+    projects.append(div);
+  }
+})();
 
 /*  the sideUI Module is responsible for the input that will appear on the 
 sideBar, it will create a new project and append it to the projects div
@@ -41,6 +80,7 @@ const sideUI = (function () {
         projects.append(newProj, newForm[0]);
         newForm[1].remove();
         projectsLibrary.push(new Project(inputDiv[0].value));
+        populateLocalStorage(projectsLibrary);
       } else if (fetchArr(projectsLibrary, inputDiv[0].value) !== undefined) {
         inputDiv[0].style.border = 'solid 0.25vh red';
         inputDiv[0].value = '';
@@ -65,7 +105,7 @@ document.addEventListener('click', (e) => {
   // event delegation check if target or target parent has the class new-project
   if (
     e.target.getAttribute('class') === 'new-project' ||
-    e.target.parentNode.getAttribute('class') === 'new-project'
+    e.target.parentElement.getAttribute('class') === 'new-project'
   ) {
     let projectName;
     // if target was the parent container its children length > 0
@@ -149,6 +189,7 @@ const todos = (function () {
             discription.value
           )
         );
+        populateLocalStorage(projectsLibrary);
         let Oldchildren = Array.from(projectParent.children);
         Oldchildren.forEach((child) => {
           child.remove();
@@ -172,6 +213,7 @@ const todoFunctionality = (function () {
         e.target.parentElement.parentElement.children[0].textContent;
       let project = fetchArr(projectsLibrary, projectTitle);
       project.completeTodo(todoTitle);
+      populateLocalStorage(projectsLibrary);
     }
   });
 
@@ -184,6 +226,7 @@ const todoFunctionality = (function () {
         e.target.parentElement.parentElement.children[0].textContent;
       let project = fetchArr(projectsLibrary, projectTitle);
       project.deleteTodo(todoTitle);
+      populateLocalStorage(projectsLibrary);
       e.target.parentElement.remove();
     }
   });
