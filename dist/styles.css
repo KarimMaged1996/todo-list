@@ -254,3 +254,7 @@ button.todoCompleted:hover {
   cursor: pointer;
   font-weight: bolder;
 }
+
+.green {
+  background-color: rgb(133, 217, 133);
+}

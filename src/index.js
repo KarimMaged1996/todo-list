@@ -73,7 +73,7 @@ document.addEventListener('click', (e) => {
       projectName = e.target.children[1].textContent;
     } else {
       // the case if the child was clicked
-      projectName = e.target.parentNode.children[1].textContent;
+      projectName = e.target.parentElement.children[1].textContent;
     }
 
     let project = fetchArr(projectsLibrary, projectName);
@@ -99,7 +99,7 @@ const todos = (function () {
   document.addEventListener('click', (e) => {
     if (
       e.target.getAttribute('class') === 'addNewTodo' ||
-      e.target.parentNode.getAttribute('class') === 'addNewTodo'
+      e.target.parentElement.getAttribute('class') === 'addNewTodo'
     ) {
       document.body.append(todoForm);
       let todoBtn = document.querySelector('.addNewTodo');
@@ -118,9 +118,23 @@ const todos = (function () {
   //event listener for the add button
   document.addEventListener('click', (e) => {
     if (e.target.getAttribute('class') === 'addTodoBtn') {
+      let projectParent = document.querySelector('.todos');
+      let projectName = projectParent.children[0].textContent;
+      let currentProj = fetchArr(projectsLibrary, projectName);
+      let names = currentProj.todoNames(); // names of existing todos
+
+      // check if the title is empty
       if (title.value === '') {
         title.style.border = 'solid 0.25vh red';
         title.setAttribute('placeholder', 'this input is required');
+
+        // check if the title is duplicated
+      } else if (names.includes(title.value)) {
+        title.style.border = 'solid 0.25vh red';
+        title.value = '';
+        title.setAttribute('placeholder', 'Duplicate Name');
+
+        // check if date is empty
       } else if (dueDate.value === '') {
         dueDate.style.border = 'solid 0.25vh red';
       } else {
@@ -143,6 +157,34 @@ const todos = (function () {
         projectParent.append(...newChildren);
         todoForm.remove();
       }
+    }
+  });
+})();
+
+const todoFunctionality = (function () {
+  //event for complete buton
+  document.addEventListener('click', (e) => {
+    if (e.target.getAttribute('class') === 'todoCompleted') {
+      e.target.parentElement.classList.add('green');
+      let todoTitle =
+        e.target.parentElement.children[1].children[1].textContent;
+      let projectTitle =
+        e.target.parentElement.parentElement.children[0].textContent;
+      let project = fetchArr(projectsLibrary, projectTitle);
+      project.completeTodo(todoTitle);
+    }
+  });
+
+  //event for delete button
+  document.addEventListener('click', (e) => {
+    if (e.target.getAttribute('class') === 'todoDelete') {
+      let todoTitle =
+        e.target.parentElement.children[1].children[1].textContent;
+      let projectTitle =
+        e.target.parentElement.parentElement.children[0].textContent;
+      let project = fetchArr(projectsLibrary, projectTitle);
+      project.deleteTodo(todoTitle);
+      e.target.parentElement.remove();
     }
   });
 })();

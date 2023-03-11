@@ -10,9 +10,23 @@ export default class Project {
 
   deleteTodo(title) {
     for (let elem of this.todo) {
-      if ((elem.title = title)) {
+      if (elem.title === title) {
         this.todo.splice(this.todo.indexOf(elem), 1);
       }
     }
+  }
+  completeTodo(name) {
+    for (let elem of this.todo) {
+      if (elem.title === name) {
+        elem.complete();
+      }
+    }
+  }
+  todoNames() {
+    let names = [];
+    for (let elem of this.todo) {
+      names.push(elem.title);
+    }
+    return names;
   }
 }

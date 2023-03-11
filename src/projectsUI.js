@@ -12,6 +12,9 @@ export default function createProjectUI(project) {
       project.todo.forEach((elem) => {
         let div = document.createElement('div');
         div.classList.add('single-todo');
+        if (elem.isComplete === true) {
+          div.classList.add('green');
+        }
         let deleteBtn = document.createElement('button');
         deleteBtn.textContent = 'X';
         deleteBtn.classList.add('todoDelete');
