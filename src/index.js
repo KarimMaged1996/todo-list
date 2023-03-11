@@ -121,8 +121,7 @@ const todos = (function () {
       if (title.value === '') {
         title.style.border = 'solid 0.25vh red';
         title.setAttribute('placeholder', 'this input is required');
-      }
-      if (dueDate.value === '') {
+      } else if (dueDate.value === '') {
         dueDate.style.border = 'solid 0.25vh red';
       } else {
         let projectParent = document.querySelector('.todos');

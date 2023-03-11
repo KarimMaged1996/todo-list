@@ -12,18 +12,44 @@ export default function createProjectUI(project) {
       project.todo.forEach((elem) => {
         let div = document.createElement('div');
         div.classList.add('single-todo');
+        let deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'X';
+        deleteBtn.classList.add('todoDelete');
         let title = document.createElement('div');
-        title.textContent = elem.title;
+        let name = document.createElement('div');
+        name.textContent = 'Title:';
+        let realName = document.createElement('div');
+        realName.textContent = elem.title;
+        title.append(name, realName);
+        title.classList.add('todoTitle'); //class for title
         let date = document.createElement('div');
-        date.textContent = elem.dueDate;
+        let dateName = document.createElement('div');
+        dateName.textContent = 'Due Date:';
+        let realDate = document.createElement('div');
+        realDate.textContent = elem.dueDate;
+        date.append(dateName, realDate);
+        date.classList.add('todoDate'); // class for date
         let priority = document.createElement('div');
-        priority.textContent = elem.priority;
+        let priorityName = document.createElement('div');
+        priorityName.textContent = 'Priority:';
+        let realPriority = document.createElement('div');
+        realPriority.textContent = elem.priority;
+        priority.append(priorityName, realPriority);
+        priority.classList.add('todoPriority');
+        let completed = document.createElement('button');
+        completed.textContent = 'completed';
+        completed.classList.add('todoCompleted');
         if (elem.discription !== '') {
           let discription = document.createElement('div');
-          discription.textContent = elem.discription;
-          div.append(title, date, priority, discription);
+          let discriptionName = document.createElement('div');
+          discriptionName.textContent = 'Discription:';
+          let realDiscription = document.createElement('div');
+          realDiscription.textContent = elem.discription;
+          discription.append(discriptionName, realDiscription);
+          discription.classList.add('todoDiscription');
+          div.append(deleteBtn, title, date, priority, discription, completed);
         } else {
-          div.append(title, date, priority);
+          div.append(deleteBtn, title, date, priority, completed);
         }
         todos.push(div);
       });

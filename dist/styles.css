@@ -182,11 +182,75 @@ div.tempForm :nth-child(3) {
 }
 
 .single-todo {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin-bottom: 2vh;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: grid;
+  grid-template-rows: 2vh 6vh min-content;
+  grid-template-columns: repeat(3, 31%) 7%;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
   background-color: aliceblue;
   width: 40vw;
-  height: 10vh;
+}
+
+.todoDelete {
+  grid-column: 4;
+  grid-row: 1;
+  margin: auto;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  border: none;
+  background-color: #343435;
+  text-align: center;
+  color: aliceblue;
+}
+
+.todoTitle {
+  grid-column: 1;
+  grid-row: 2;
+  padding-left: 20px;
+}
+.todoDate {
+  grid-column: 2;
+  grid-row: 2;
+}
+.todoPriority {
+  grid-column: 3;
+  grid-row: 2;
+}
+.todoDiscription {
+  grid-column: 1 /3;
+  grid-row: 3;
+  padding-left: 20px;
+}
+.todoCompleted {
+  grid-column: 3;
+  grid-row: 4;
+  width: fit-content;
+  height: fit-content;
+  border: none;
+  background-color: #343435;
+  color: aliceblue;
+  padding: 2px 5px;
+}
+
+div.todoTitle :nth-child(1),
+div.todoDate :nth-child(1),
+div.todoPriority :nth-child(1),
+div.todoDiscription :nth-child(1) {
+  font-weight: 900;
+}
+
+div.todoTitle :nth-child(2),
+div.todoDate :nth-child(2),
+div.todoPriority :nth-child(2),
+div.todoDiscription :nth-child(2) {
+  font-size: small;
+}
+
+button.todoDelete:hover,
+button.todoCompleted:hover {
+  cursor: pointer;
+  font-weight: bolder;
 }
