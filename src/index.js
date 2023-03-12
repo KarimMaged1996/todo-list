@@ -43,7 +43,10 @@ const storageModule = (function () {
       icon.src = projectIcon;
       let divText = document.createElement('div');
       divText.textContent = proj.name;
-      newProj.append(icon, divText);
+      let delProj = document.createElement('div');
+      delProj.textContent = 'X';
+      delProj.classList.add('delProj');
+      newProj.append(icon, divText, delProj);
       projects.append(newProj);
     });
     projects.append(div);
@@ -76,7 +79,10 @@ const sideUI = (function () {
         icon.src = projectIcon;
         let divText = document.createElement('div');
         divText.textContent = inputDiv[0].value;
-        newProj.append(icon, divText);
+        let delProj = document.createElement('div');
+        delProj.textContent = 'X';
+        delProj.classList.add('delProj');
+        newProj.append(icon, divText, delProj);
         projects.append(newProj, newForm[0]);
         newForm[1].remove();
         projectsLibrary.push(new Project(inputDiv[0].value));
@@ -105,7 +111,8 @@ document.addEventListener('click', (e) => {
   // event delegation check if target or target parent has the class new-project
   if (
     e.target.getAttribute('class') === 'new-project' ||
-    e.target.parentElement.getAttribute('class') === 'new-project'
+    (e.target.parentElement.getAttribute('class') === 'new-project' &&
+      e.target.getAttribute('class') !== 'delProj')
   ) {
     let projectName;
     // if target was the parent container its children length > 0
@@ -124,6 +131,24 @@ document.addEventListener('click', (e) => {
       elem.remove();
     });
     parent.append(...newChildren);
+  }
+});
+
+// event listener to delete a project
+document.addEventListener('click', (e) => {
+  if (e.target.getAttribute('class') === 'delProj') {
+    let delProjName = e.target.parentElement.children[1].textContent;
+    e.target.parentElement.remove();
+    for (let proj in projectsLibrary) {
+      if (projectsLibrary[proj].name === delProjName) {
+        projectsLibrary.splice(proj, 1);
+      }
+    }
+    populateLocalStorage(projectsLibrary);
+    let parent = document.querySelector('.todos');
+    while (parent.children.length > 0) {
+      parent.removeChild(parent.children[0]);
+    }
   }
 });
 

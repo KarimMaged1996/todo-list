@@ -123,6 +123,20 @@ div .new-project:hover {
   background-color: #71717a;
 }
 
+.delProj {
+  font-size: 0.75rem;
+  color: #18181b;
+  text-align: center;
+  align-self: center;
+  margin-left: auto;
+  margin-right: 2%;
+}
+
+div.delProj:hover {
+  font-weight: 900;
+  font-size: larger;
+}
+
 .tempForm input {
   width: 90%;
   height: 4vh;
